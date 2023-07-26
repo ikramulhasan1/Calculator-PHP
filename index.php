@@ -1,6 +1,6 @@
 <?php
 $num = "";
-$oparetor = "";
+// $oparetor = "";
 $result = "";
 
 $cookie_name1 = "num";
@@ -9,18 +9,53 @@ $cookie_value1 = "";
 $cookie_name2 = "op";
 $cookie_value2 = "";
 
-
+// Display Field
 if (isset($_POST["display"])) {
     $num = $_POST["display"];
+} else {
+    $num = "";
 }
 
-
+// Numbers show
 if (isset($_POST["submit"])) {
     $num = $_POST["display"] . $_POST["submit"];
 } else {
     $num = "";
 }
 
+
+// cookie_value set
+if (isset($_POST["op"])) {
+    $cookie_value1 = $_POST["display"];
+    setcookie($cookie_name1, $cookie_value1, time() + (86400 * 30), "/");
+
+
+    $cookie_name2 = $_POST["op"];
+    setcookie($cookie_name2, $cookie_value2, time() + (86400 * 30), "/");
+
+    $num = "";
+}
+
+
+if (isset($_POST["equal"])) {
+    $num = $_POST["display"];
+
+    switch ($_COOKIE["op"]) {
+        case "+":
+            $result = $num + $_COOKIE["num"];
+            break;
+        case "/":
+            $result = $num / $_COOKIE["num"];
+            break;
+        case "-":
+            $result = $num - $_COOKIE["num"];
+            break;
+        case '*':
+            $result = $num * $_COOKIE["num"];
+            break;
+    }
+    $num = $result;
+}
 
 
 echo 'working';
